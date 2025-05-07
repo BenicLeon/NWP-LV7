@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Project Management</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<% if (user) { %>
+  <nav>
+    <a href="/projects">Svi Projekti</a>
+    <a href="/projects/my-lead">Moji Projekti (Voditelj)</a>
+    <a href="/projects/my-team">Moji Projekti (Član)</a>
+    <a href="/projects/archive">Arhiva</a>
+    <a href="/users/profile">Profil</a>
+    <a href="/users/logout">Odjava</a>
+  </nav>
+<% } %>

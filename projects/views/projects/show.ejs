@@ -1,0 +1,43 @@
+<%- include('../partials/header') %>
+<h1><%= project.name %></h1>
+<p>Opis: <%= project.description %></p>
+<p>Cijena: <%= project.price %> kn</p>
+<p>Obavljeni poslovi: <%= project.tasks || 'Nema' %></p>
+<p>Datum početka: <%= project.startDate.toLocaleDateString('hr-HR') %></p>
+<p>Datum završetka: <%= project.endDate.toLocaleDateString('hr-HR') %></p>
+<p>Voditelj: <%= project.leader.username %></p>
+<p>Tim: <%= project.teamMembers.map(m => m.username).join(', ') || 'Nema' %></p>
+<p>Status: <%= project.archived ? 'Arhiviran' : 'Aktivan' %></p>
+
+<% if (user._id.toString() === project.leader._id.toString()) { %>
+  <a href="/projects/<%= project._id %>/edit">Uredi Projekt</a>
+  <form action="/projects/<%= project._id %>?_method=DELETE" method="POST">
+    <button type="submit">Obriši Projekt</button>
+  </form>
+  <% if (users.length > 0) { %>
+    <form action="/projects/<%= project._id %>/team" method="POST">
+      <label for="userId">Dodaj člana tima</label>
+      <select name="userId" required>
+        <% users.forEach(u => { %>
+          <option value="<%= u._id %>"><%= u.username %></option>
+        <% }) %>
+      </select>
+      <button type="submit">Dodaj</button>
+    </form>
+  <% } %>
+  <% if (!project.archived) { %>
+    <form action="/projects/<%= project._id %>/archive" method="POST">
+      <button type="submit">Arhiviraj Projekt</button>
+    </form>
+  <% } %>
+<% } %>
+
+<% if (user._id.toString() === project.leader._id.toString() || project.teamMembers.some(m => m._id.toString() === user._id.toString())) { %>
+  <form action="/projects/<%= project._id %>/tasks?_method=PUT" method="POST">
+    <label for="tasks">Ažuriraj obavljene poslove</label>
+    <textarea id="tasks" name="tasks"><%= project.tasks || '' %></textarea>
+    <button type="submit">Ažuriraj</button>
+  </form>
+<% } %>
+
+<%- include('../partials/footer') %>

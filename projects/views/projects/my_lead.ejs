@@ -1,0 +1,15 @@
+<%- include('../partials/header') %>
+<h1>Moji Projekti (Voditelj)</h1>
+<% projects.forEach(project => { %>
+  <div class="project-card">
+    <h2><a href="/projects/<%= project._id %>"><%= project.name %></a></h2>
+    <p>Opis: <%= project.description %></p>
+    <p>Cijena: <%= project.price %> kn</p>
+    <p>Obavljeni poslovi: <%= project.tasks || 'Nema' %></p>
+    <p>Datum početka: <%= project.startDate.toLocaleDateString('hr-HR') %></p>
+    <p>Datum završetka: <%= project.endDate.toLocaleDateString('hr-HR') %></p>
+    <p>Tim: <%= project.teamMembers.map(m => m.username).join(', ') || 'Nema' %></p>
+    <p>Status: <%= project.archived ? 'Arhiviran' : 'Aktivan' %></p>
+  </div>
+<% }) %>
+<%- include('../partials/footer') %>

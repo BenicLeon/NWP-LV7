@@ -1,0 +1,28 @@
+<%- include('../partials/header') %>
+<h1>Uredi projekt</h1>
+<form action="/projects/<%= project._id %>?_method=PUT" method="POST">
+  <label>Naziv projekta</label>
+  <input name="name" value="<%= project.name %>" placeholder="Naziv" required>
+  <label>Opis</label>
+  <textarea name="description" placeholder="Opis" required><%= project.description %></textarea>
+  <label>Cijena (EUR)</label>
+  <input name="price" type="number" value="<%= project.price %>" placeholder="Cijena" required>
+  <label>Obavljeni poslovi</label>
+  <input name="tasks" value="<%= project.tasks || '' %>" placeholder="Poslovi">
+  <label>Datum početka</label>
+  <input name="startDate" type="date" value="<%= project.startDate.toISOString().split('T')[0] %>" required>
+  <label>Datum završetka</label>
+  <input name="endDate" type="date" value="<%= project.endDate.toISOString().split('T')[0] %>" required>
+  <label>Arhiviran</label>
+  <input name="archived" type="checkbox" <%= project.archived ? 'checked' : '' %>>
+  <button type="submit">Spremi promjene</button>
+</form>
+<a href="/projects">← Natrag na sve projekte</a>
+<script>
+  const start = document.querySelector('input[name="startDate"]');
+  const end = document.querySelector('input[name="endDate"]');
+  start.addEventListener('change', () => {
+    end.min = start.value;
+  });
+</script>
+<%- include('../partials/footer') %>
